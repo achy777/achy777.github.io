@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script type="text/javascript">
+window.onload = function () {
+var jsonfile = {
+   "jsonarray": [{
+      "name": "Joe",
+      "age": 12
+   }, {
+      "name": "Tom",
+      "age": 14
+   }]
+};
+
+var labels = jsonfile.jsonarray.map(function(e) {
+   return e.name;
+});
+var data = jsonfile.jsonarray.map(function(e) {
+   return e.age;
+});;
+
+var ctx = canvas.getContext('2d');
+var config = {
+   type: 'line',
+   data: {
+      labels: labels,
+      datasets: [{
+         label: 'Graph Line',
+         data: data,
+         backgroundColor: 'rgba(0, 119, 204, 0.3)'
+      }]
+   }
+};
+
+var chart = new Chart(ctx, config);
+}
+</script>
+
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 300px;">
+<canvas id="canvas" style="border:1px solid #000000;"></canvas>
+</div>
+</body>
+</html>
