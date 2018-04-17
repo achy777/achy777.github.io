@@ -5,34 +5,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 <script type="text/javascript">
 window.onload = function () {
-var jsonfile = {
-   "jsonarray": [{
-      "name": "Joe",
-      "age": 12
-   }, {
-      "name": "Tom",
-      "age": 14
-   }]
-};
+	var responseStr = '{"FeatureKey": "DFWSYS-41558","FeatureStoriesDone": 10,"FeatureTotalStories": 17,"CapabiityStoriesDone": 9,"CapabilityTotalStories": 12,"EpicStoriesDone": 3,"EpicTotalStories": 9}';
 
-var labels = jsonfile.jsonarray.map(function(e) {
-   return e.name;
-});
-var data = jsonfile.jsonarray.map(function(e) {
-   return e.age;
-});;
+var responseJson = JSON.parse(responseStr);
 
-var ctx = canvas.getContext('2d');
-var config = {
-   type: 'line',
-   data: {
-      labels: labels,
-      datasets: [{
-         label: 'Graph Line',
-         data: data,
-         backgroundColor: 'rgba(0, 119, 204, 0.3)'
-      }]
-   }
+	var ctx = canvas.getContext('2d');
+	var config = {
+	   type: 'pie',
+	   data: {
+		  labels: ['Feature Stories Done', 'Feature Total Stories', 'Capabiity Stories Done', 'Capability Total Stories', 'Epic Stories Done', 'Epic Total Stories'],
+		  datasets: [{
+			 label: 'Pie Chart',
+			 data: [responseJson.FeatureStoriesDone, responseJson.FeatureTotalStories, responseJson.CapabiityStoriesDone, responseJson.CapabilityTotalStories, responseJson.EpicStoriesDone, responseJson.EpicTotalStories],
+			 backgroundColor: ['red', 'yellow', 'orange', 'green', 'brown', 'blue']
+		  }]
+	   }
 };
 
 var chart = new Chart(ctx, config);
