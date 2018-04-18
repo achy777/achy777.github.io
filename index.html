@@ -5,9 +5,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 <script type="text/javascript">
 window.onload = function () {
-	var responseStr = '{"FeatureKey": "DFWSYS-41558","FeatureStoriesDone": 10,"FeatureTotalStories": 17,"CapabiityStoriesDone": 9,"CapabilityTotalStories": 12,"EpicStoriesDone": 3,"EpicTotalStories": 9}';
 
-var responseJson = JSON.parse(responseStr);
+var xhr = new XMLHttpRequest();
+var responseJson = {};
+xhr.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        responseJson = JSON.parse(this.responseText);
+        console.log("above myarr");
+        console.log(responseJson);
+    }
+};
+xhr.open("POST", 'http://egtam-api.dtveng.net/RMI/rest/API/ReturnFeatureLink/DFWSYS-41558', true);
+//xhr.setRequestHeader('Access-Control-Allow-Origin', 'http://services.groupkt.com');
+xhr.setRequestHeader('accept', 'application/json');
+console.log(xhr);
+xhr.send();
+console.log(xhr);
+
+
+
+	//var responseStr = '{"FeatureKey": "DFWSYS-41558","FeatureStoriesDone": 10,"FeatureTotalStories": 17,"CapabiityStoriesDone": 9,"CapabilityTotalStories": 12,"EpicStoriesDone": 3,"EpicTotalStories": 9}';
+
+//var responseJson = JSON.parse(this.responseText);
 
 	var ctx = canvas.getContext('2d');
 	var config = {
@@ -23,7 +42,10 @@ var responseJson = JSON.parse(responseStr);
 };
 
 var chart = new Chart(ctx, config);
+
+
 }
+
 </script>
 
 </head>
