@@ -5,44 +5,38 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 <script type="text/javascript">
 window.onload = function () {
-
-var xhr = new XMLHttpRequest();
-var responseJson = {};
-xhr.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        responseJson = JSON.parse(this.responseText);
-        console.log("above myarr");
-        console.log(responseJson);
-    }
-};
-xhr.open("POST", 'http://egtam-api.dtveng.net/RMI/rest/API/ReturnFeatureLink/DFWSYS-41558', true);
-//xhr.setRequestHeader('Access-Control-Allow-Origin', 'http://services.groupkt.com');
-xhr.setRequestHeader('accept', 'application/json');
-console.log(xhr);
-xhr.send();
-console.log(xhr);
-
-
-
-	//var responseStr = '{"FeatureKey": "DFWSYS-41558","FeatureStoriesDone": 10,"FeatureTotalStories": 17,"CapabiityStoriesDone": 9,"CapabilityTotalStories": 12,"EpicStoriesDone": 3,"EpicTotalStories": 9}';
-
-//var responseJson = JSON.parse(this.responseText);
-
-	var ctx = canvas.getContext('2d');
-	var config = {
-	   type: 'pie',
-	   data: {
-		  labels: ['Feature Stories Done', 'Feature Total Stories', 'Capabiity Stories Done', 'Capability Total Stories', 'Epic Stories Done', 'Epic Total Stories'],
-		  datasets: [{
-			 label: 'Pie Chart',
-			 data: [responseJson.FeatureStoriesDone, responseJson.FeatureTotalStories, responseJson.CapabiityStoriesDone, responseJson.CapabilityTotalStories, responseJson.EpicStoriesDone, responseJson.EpicTotalStories],
-			 backgroundColor: ['red', 'yellow', 'orange', 'green', 'brown', 'blue']
-		  }]
-	   }
-};
-
-var chart = new Chart(ctx, config);
-
+	var queryDict = {};
+	location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]})
+	var featureKey = queryDict['featureKey'];
+	
+	var xhr = new XMLHttpRequest();
+	var responseJson = {};
+	xhr.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			responseJson = JSON.parse(xhr.responseText);
+			console.log("above myarr");
+			console.log(responseJson);
+				var ctx = canvas.getContext('2d');
+				
+			console.log(responseJson);
+			var config = {
+			   type: 'pie',
+			   data: {
+				  labels: ['Feature Stories Done', 'Feature Total Stories', 'Capabiity Stories Done', 'Capability Total Stories', 'Epic Stories Done', 'Epic Total Stories'],
+				  datasets: [{
+					 label: 'Pie Chart',
+					 data: [responseJson.FeatureStoriesDone, responseJson.FeatureTotalStories, responseJson.CapabiityStoriesDone, responseJson.CapabilityTotalStories, responseJson.EpicStoriesDone, responseJson.EpicTotalStories],
+					 backgroundColor: ['red', 'yellow', 'orange', 'green', 'brown', 'blue']
+				  }]
+			   }
+			};
+			var chart = new Chart(ctx, config);
+		}
+	};
+	var uri = 'http://egtam-api.dtveng.net/RMI/rest/API/ReturnFeatureLink/' + featureKey;
+	xhr.open("POST", uri, true);
+	xhr.setRequestHeader('accept', 'application/json');
+	xhr.send();
 
 }
 
