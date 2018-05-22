@@ -7,14 +7,13 @@
 window.onload = function () {
 	var queryDict = {};
 	location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]})
-	var featureKey = queryDict['featureKey'];
+	var storyKey = queryDict['storyKey'];
 	
 	var xhr = new XMLHttpRequest();
 	var responseJson = {};
 	xhr.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			responseJson = JSON.parse(xhr.responseText);
-			console.log("above myarr");
 			console.log(responseJson);
 				var ctx = canvas.getContext('2d');
 				
@@ -22,21 +21,20 @@ window.onload = function () {
 			var config = {
 			   type: 'pie',
 			   data: {
-				  labels: ['Feature Stories Done', 'Feature Total Stories', 'Capabiity Stories Done', 'Capability Total Stories', 'Epic Stories Done', 'Epic Total Stories'],
+				  labels: ['Story SubTasks Done', 'Story Total SubTasks', 'Feature Stories Done', 'Feature Total Stories', 'Capability Stories Done', 'Capability Total Stories', 'Epic Stories Done', 'Epic Total Stories'],
 				  datasets: [{
 					 label: 'Pie Chart',
-					 data: [responseJson.FeatureStoriesDone, responseJson.FeatureTotalStories, responseJson.CapabiityStoriesDone, responseJson.CapabilityTotalStories, responseJson.EpicStoriesDone, responseJson.EpicTotalStories],
-					 backgroundColor: ['red', 'yellow', 'orange', 'green', 'brown', 'blue']
+					 data: [responseJson.StorySubTasksDone, responseJson.StoryTotalSubTasks, responseJson.FeatureStoriesDone, responseJson.FeatureTotalStories, responseJson.CapabilityStoriesDone, responseJson.CapabilityTotalStories, responseJson.EpicStoriesDone,responseJson.EpicTotalStories],
+					 backgroundColor: ['red', 'yellow', 'orange', 'green', 'brown', 'blue', 'pink', 'grey']
 				  }]
 			   }
 			};
 			var chart = new Chart(ctx, config);
 		}
 	};
-	var uri = 'https://egtam-api.dtveng.net/RMI/rest/API/ReturnFeatureLink/' + featureKey;
+	var uri = 'https://egtam-api.dtveng.net/RMI/rest/API/ReturnStoryLink/' + storyKey;
 	xhr.open("POST", uri, true);
 	xhr.setRequestHeader('accept', 'application/json');
-	//xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 	xhr.send();
 
 }
