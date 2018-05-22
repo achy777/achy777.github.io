@@ -36,7 +36,7 @@ window.onload = function () {
 	var uri = 'https://egtam-api.dtveng.net/RMI/rest/API/ReturnFeatureLink/' + featureKey;
 	xhr.open("POST", uri, true);
 	xhr.setRequestHeader('accept', 'application/json');
-	xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+	//xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 	xhr.send();
 
 }
